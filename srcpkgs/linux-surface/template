@@ -1,0 +1,10 @@
+# Template file for 'linux-surface'
+pkgname=linux-surface
+version=7.2
+revision=1
+metapackage=yes
+depends="linux7.2-surface linux-base"
+short_desc="Linux Surface kernel meta package"
+maintainer="flaveraid <flaveraid@spooby.net>"
+license="GPL-2.0-only"
+homepage="https://www.kernel.org"
