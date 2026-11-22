@@ -1,0 +1,21 @@
+# Template file for 'btrfs-assistant'
+pkgname=btrfs-assistant
+version=3.0.0
+revision=1
+build_style=cmake
+hostmakedepends="pkg-config qt6-base qt6-tools"
+makedepends="libbtrfsutil-devel qt6-base-devel qt6-svg-devel qt6-tools-devel"
+depends="btrfs-progs diffutils util-linux dbus polkit"
+short_desc="GUI management tool to make managing a Btrfs filesystem easier"
+maintainer="flaveraid <flaveraid@spooby.net>"
+license="GPL-3.0-or-later"
+homepage="https://gitlab.com/btrfs-assistant/btrfs-assistant"
+changelog="https://gitlab.com/btrfs-assistant/btrfs-assistant/-/raw/main/changelog"
+distfiles="https://gitlab.com/btrfs-assistant/btrfs-assistant/-/archive/${version}/btrfs-assistant-${version}.tar.gz"
+checksum=cb33a9a616fc0f4196b3311ce8ae1ed3f4b24994546713e0dfb958407c8a86ff
+conf_files="/etc/btrfs-assistant.conf"
+
+pre_configure() {
+	# upstream builds with -Werror; new GCC warnings shouldn't break the build
+	vsed -e 's/-Werror //' -i src/CMakeLists.txt
+}
