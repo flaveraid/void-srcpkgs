@@ -22,7 +22,7 @@ git clone https://github.com/flaveraid/void-srcpkgs.git
 ## Pull Upstream Changes
 
 ```sh
-git pull --rebase && ./xbps-src bootstrap-update
+git pull --rebase --autostash && ./xbps-src bootstrap-update
 git -C void-srcpkgs pull && ./void-srcpkgs/link.sh
 ```
 
