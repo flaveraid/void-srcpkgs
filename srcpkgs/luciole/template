@@ -1,0 +1,27 @@
+# Template file for 'luciole'
+pkgname=luciole
+version=0.1.0.20261124
+revision=1
+_commit=ea29c1c65eeb8c99495ebfe4c55ea6eb0a61612b
+build_style=meson
+configure_args="-Dtests=disabled -Dnative_optimizations=false
+ -Dbuild_revision=${_commit:0:7} -Dwerror=false"
+hostmakedepends="pkg-config wayland-devel glib-devel"
+makedepends="wayland-devel wayland-protocols MesaLib-devel glib-devel
+ libcurl-devel libxml2-devel freetype-devel fontconfig-devel cairo-devel
+ pango-devel harfbuzz-devel libxkbcommon-devel gdk-pixbuf-devel
+ librsvg-devel libpng-devel libarchive-devel liblzma-devel acl-devel
+ tomlplusplus-devel json-c++ stb"
+depends="gvfs shared-mime-info gsettings-desktop-schemas dconf
+ adwaita-icon-theme dejavu-fonts-ttf"
+short_desc="Native Wayland file manager using Noctalia rendering"
+maintainer="Jeff <you@example.com>"
+license="MIT"
+homepage="https://github.com/noctalia-dev/luciole"
+distfiles="https://github.com/noctalia-dev/luciole/archive/${_commit}.tar.gz"
+checksum=0f0a6f299774cee1d3ba957116e0320080c9c55d47f8fcffd0191af26d5f21b2
+
+post_install() {
+	vlicense LICENSE
+	vlicense lib/assets/fonts/tabler-icons-license.txt tabler-icons-LICENSE
+}
