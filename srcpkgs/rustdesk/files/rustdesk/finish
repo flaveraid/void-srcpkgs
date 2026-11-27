@@ -1,0 +1,4 @@
+#!/bin/sh
+# --service spawns --server/--tray helpers that outlive it; upstream's
+# unit kills them on stop too.
+pkill -f 'rustdesk --(server|tray)' || :

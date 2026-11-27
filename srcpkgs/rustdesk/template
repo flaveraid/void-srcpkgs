@@ -1,0 +1,50 @@
+# Template file for 'rustdesk'
+pkgname=rustdesk
+version=1.5.3
+revision=1
+archs="x86_64 aarch64"
+create_wrksrc=yes
+depends="hicolor-icon-theme xdotool libva libayatana-appindicator
+ gst-plugins-base1 gstreamer1-pipewire curl procps-ng"
+short_desc="Open source remote desktop client (upstream prebuilt binary)"
+maintainer="flaveraid <flaveraid@spooby.net>"
+license="AGPL-3.0-or-later"
+homepage="https://rustdesk.com"
+changelog="https://github.com/rustdesk/rustdesk/releases"
+# Stripping breaks the Dart AOT snapshot in libapp.so
+nostrip=yes
+nopie=yes
+
+_url="https://github.com/rustdesk/rustdesk/releases/download/${version}"
+case "$XBPS_TARGET_MACHINE" in
+	x86_64)
+		distfiles="${_url}/rustdesk-${version}-x86_64.deb"
+		checksum=81096d2f65fd43352540c351bca15bb0712a2a6f9efa4c95e9fff25cb97b3b81
+		;;
+	#aarch64)
+	#	distfiles="${_url}/rustdesk-${version}-aarch64.deb"
+	#	checksum=d1471ed916dc21e3ae3965f936c51944e1f2635a6d521fcc4663486696018465
+	#	;;
+	*)
+		broken="no upstream binary for ${XBPS_TARGET_MACHINE}"
+		;;
+esac
+
+do_install() {
+	vmkdir usr/lib
+	vcopy usr/share/rustdesk usr/lib
+
+	rm -r "${DESTDIR}/usr/lib/rustdesk/files"
+
+	vmkdir usr/bin
+	ln -s /usr/lib/rustdesk/rustdesk "${DESTDIR}/usr/bin/rustdesk"
+
+	vinstall usr/share/applications/rustdesk.desktop 644 usr/share/applications
+	vinstall usr/share/applications/rustdesk-link.desktop 644 usr/share/applications
+	vinstall usr/share/icons/hicolor/256x256/apps/rustdesk.png 644 \
+		usr/share/icons/hicolor/256x256/apps
+	vinstall usr/share/icons/hicolor/scalable/apps/rustdesk.svg 644 \
+		usr/share/icons/hicolor/scalable/apps
+
+	vsv rustdesk
+}
